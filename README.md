@@ -13,13 +13,13 @@ Back-end:
 
 ## MODELO ENTIDADE-RELACIONAMENTO
 
-![Modelo Entidade-Relacionamento](https://github.com/ricardo-yuri/clinica-veterinaria/src/main/java/com/gama/academy/clinica/assets/modelo-entidade-relacionamento.png)
+![Modelo Entidade-Relacionamento](https://github.com/ricardo-yuri/clinica-veterinaria/blob/main/src/main/java/com/gama/academy/clinica/assets/modelo-entidade-relacionamento.png)
 
 <br>
 
 ## DIAGRAMA DE CLASSES
 
-![Diagrama de Classes](https://github.com/ricardo-yuri/clinica-veterinaria/src/main/java/com/gama/academy/clinica/assets/diagrama-classes.png)
+![Diagrama de Classes](https://github.com/ricardo-yuri/clinica-veterinaria/blob/main/src/main/java/com/gama/academy/clinica/assets/diagrama-classes.png)
 
 <br>
 
