@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,11 +19,26 @@ import com.gama.academy.clinica.model.Tutor;
 import com.gama.academy.clinica.service.TutorService;
 
 @RestController()
-@RequestMapping(value = "clinica/tutores")
+@RequestMapping(value = "/tutores")
 public class TutorController {
 
 	@Autowired
 	private TutorService tutorService;
+	
+	@GetMapping
+	public ResponseEntity<List<Tutor>> getAll() {
+
+		List<Tutor> tutores = tutorService.getAll();
+
+		return ResponseEntity.ok(tutores);
+
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Tutor> getById(@PathVariable Long id) {
+		Tutor tutor = tutorService.getById(id);
+		return ResponseEntity.ok(tutor);
+	}
 
 	@PostMapping
 	public ResponseEntity<?> save(@RequestBody Tutor tutor) {
@@ -34,14 +52,26 @@ public class TutorController {
 		return ResponseEntity.noContent().build();
 
 	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Tutor tutor) {
 
-	@GetMapping
-	public ResponseEntity<List<Tutor>> getAll() {
+		Tutor t = tutorService.update(id, tutor);
 
-		List<Tutor> tutores = tutorService.getAll();
-
-		return ResponseEntity.ok(tutores);
-
+		if (tutor != null) {
+			return ResponseEntity.ok(t);
+		}
+		// Não é esta a resposta
+		return ResponseEntity.noContent().build();
 	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> delete(@PathVariable Long id) {
+		String msg = tutorService.delete(id);
+		return ResponseEntity.ok(msg);
+	}
+	
+
+
 
 }

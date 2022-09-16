@@ -1,8 +1,8 @@
 package com.gama.academy.clinica.model;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,13 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@EqualsAndHashCode
 @Entity
 @Table(name = "tb_tutor")
 public class Tutor {
@@ -29,11 +27,29 @@ public class Tutor {
 	private String email;
 	private String telefone;
 
-	@OneToMany(mappedBy = "id")
+	@OneToMany
 	private List<Paciente> pacientes = new ArrayList<>();
 
 	public Tutor() {
-		//pacientes = new ArrayList<>();
+		pacientes = new ArrayList<>();
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Tutor other = (Tutor) obj;
+		return Objects.equals(id, other.id);
+	}
+
 
 }

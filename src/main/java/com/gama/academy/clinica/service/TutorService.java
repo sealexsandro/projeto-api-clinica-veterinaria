@@ -14,11 +14,44 @@ public class TutorService {
 	@Autowired
 	private TutorRepository tutorRepository;
 	
+
+	public List<Tutor> getAll(){
+		return tutorRepository.findAll();
+	}
+	
+	public Tutor getById(Long id){
+		return tutorRepository.findById(id).orElse(null);
+	}
+	
 	public Tutor save(Tutor tutor) {
 		return tutorRepository.save(tutor);
 	}
 	
-	public List<Tutor> getAll(){
-		return tutorRepository.findAll();
+	public Tutor update(Long id, Tutor tutor) {
+		Tutor tutorAtualizar = getById(id);
+		
+		if(tutorAtualizar != null) {
+			tutor.setId(id);
+			return save(tutor);
+		}
+		return null;
 	}
+	
+	
+	public String delete(Long id) {
+		
+		Tutor tutor = getById(id);
+		
+		if(tutor != null) {
+			tutorRepository.deleteById(id);	
+			return "Objeto Excluido";
+		}
+		return "Objeto Não Encontrado";
+		
+	}
+	
+	
+	
+	
+	
 }
