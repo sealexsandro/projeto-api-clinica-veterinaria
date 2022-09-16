@@ -24,19 +24,19 @@ public class Agendamento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private Instant dataAtendimento;
+	private String dataAtendimento;
 	private String horaAtendimento;
 	private StatusAgendamento statusAgendamento;
 	private Double pesoPaciente;
 	
-	@OneToOne
-	private Paciente paciente;
-	
-	@OneToMany
-	private List<Procedimento> procedimentos;
+//	@OneToOne
+//	private Paciente paciente;
+//	
+//	@OneToMany
+//	private List<Procedimento> procedimentos;
 
 	public Agendamento() {
-		procedimentos = new ArrayList<>();
+//		procedimentos = new ArrayList<>();
 	}
 
 	@Override

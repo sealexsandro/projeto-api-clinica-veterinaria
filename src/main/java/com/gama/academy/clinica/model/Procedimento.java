@@ -24,7 +24,6 @@ public class Procedimento {
 	private String descricao;
 
 	public Procedimento() {
-
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.gama.academy.clinica.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,8 @@ public class TutorService {
 	private TutorRepository tutorRepository;
 	
 
-	public List<Tutor> getAll(){
-		return tutorRepository.findAll();
+	public ArrayList<Tutor> getAll(){
+		return (ArrayList<Tutor>) tutorRepository.findAll();
 	}
 	
 	public Tutor getById(Long id){
@@ -31,7 +32,7 @@ public class TutorService {
 		Tutor tutorAtualizar = getById(id);
 		
 		if(tutorAtualizar != null) {
-			tutor.setId(id);
+//			tutor.setId(id);
 			return save(tutor);
 		}
 		return null;
