@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gama.academy.clinica.model.Paciente;
+import com.gama.academy.clinica.model.Tutor;
 import com.gama.academy.clinica.service.PacienteService;
+import com.gama.academy.clinica.service.TutorService;
 
 @RestController
 @RequestMapping(value = "/pacientes")
@@ -23,6 +25,10 @@ public class PacienteController {
 
 	@Autowired
 	private PacienteService service;
+	
+
+	@Autowired
+	private TutorService tutorService;
 
 	@GetMapping
 	public ResponseEntity<List<Paciente>> getAll() {
@@ -39,11 +45,31 @@ public class PacienteController {
 		}
 		return ResponseEntity.badRequest().body("Objeto não Encontrado");
 	}
+	
+	@GetMapping("/tutor/{tutorId}")
+	public ResponseEntity<?> getTutor(@PathVariable Long tutorId) {
+
+		Tutor tutor = service.getTutor(tutorId);
+
+		if (!Objects.isNull(tutor)) {
+			return ResponseEntity.ok(tutor);
+		}
+		return ResponseEntity.badRequest().body("Objeto não Encontrado");
+	}
 
 	@PostMapping
-	public ResponseEntity<Paciente> save(@RequestBody Paciente p) {
-		return ResponseEntity.ok(service.save(p));
+	public ResponseEntity<?> save(@RequestBody Paciente paciente) {
+		
+		Tutor tutor = tutorService.getById(paciente.getTutorId());
+		
+		if(!Objects.isNull(tutor)) {
+			paciente.setTutor(tutor);
+			return ResponseEntity.ok(paciente);			
+		}
+//		
+		return ResponseEntity.badRequest().body("Objeto Tutor Não Encontrado");
 	}
+	
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Paciente paciente) {

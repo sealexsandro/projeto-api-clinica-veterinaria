@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -32,11 +33,11 @@ public class Paciente {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "GMT-3")
 	private Instant dataNascimento;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "tutor_id")
-//	private Tutor tutor;
-	
+	@ManyToOne
 	@JoinColumn(name = "tutor_id")
+	private Tutor tutor;
+	
+	@Transient
 	private Long tutorId;
 	
 	public Paciente() {

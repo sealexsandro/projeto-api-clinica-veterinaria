@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.gama.academy.clinica.model.Paciente;
 import com.gama.academy.clinica.model.Tutor;
 import com.gama.academy.clinica.repository.PacienteRepository;
+import com.gama.academy.clinica.repository.TutorRepository;
 
 @Service
 public class PacienteService {
@@ -22,6 +23,13 @@ public class PacienteService {
 
 	public Paciente findById(Long id) {
 		return pacienteRepository.findById(id).orElse(null);
+	}
+
+	public Tutor getTutor(Long tutorId) {
+
+		Tutor tutor = pacienteRepository.getTutor(tutorId);
+
+		return tutor;
 	}
 
 	public Paciente save(Paciente p) {
