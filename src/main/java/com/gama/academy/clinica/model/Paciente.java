@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,11 +28,16 @@ public class Paciente {
 	private Long id;
 	private String nome;
 	private SexoPaciente sexo;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "GMT-3")
 	private Instant dataNascimento;
 	
-	@ManyToOne
+//	@ManyToOne
+//	@JoinColumn(name = "tutor_id")
+//	private Tutor tutor;
+	
 	@JoinColumn(name = "tutor_id")
-	private Tutor tutor;
+	private Long tutorId;
 	
 	public Paciente() {
 		

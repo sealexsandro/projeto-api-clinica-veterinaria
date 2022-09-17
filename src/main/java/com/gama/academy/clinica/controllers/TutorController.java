@@ -1,6 +1,7 @@
 package com.gama.academy.clinica.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +25,8 @@ public class TutorController {
 	private TutorService tutorService;
 	
 	@GetMapping
-	public ArrayList<Tutor> getAll() {
-		return tutorService.getAll();
+	public ResponseEntity<List<Tutor>> getAll() {
+		return ResponseEntity.ok(tutorService.getAll());
 
 	}
 	
