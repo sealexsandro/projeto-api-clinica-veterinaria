@@ -1,6 +1,5 @@
 package com.gama.academy.clinica.model;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

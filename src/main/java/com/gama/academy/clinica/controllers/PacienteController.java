@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gama.academy.clinica.dto.PacienteDto;
 import com.gama.academy.clinica.model.Paciente;
-import com.gama.academy.clinica.model.Tutor;
 import com.gama.academy.clinica.service.PacienteService;
 import com.gama.academy.clinica.service.TutorService;
 
@@ -25,56 +25,35 @@ public class PacienteController {
 
 	@Autowired
 	private PacienteService service;
-	
 
 	@Autowired
 	private TutorService tutorService;
 
 	@GetMapping
-	public ResponseEntity<List<Paciente>> getAll() {
+	public ResponseEntity<List<PacienteDto>> getAll() {
 		return ResponseEntity.ok(service.getAll());
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getById(@PathVariable Long id) {
 
-		Paciente p = service.findById(id);
+		PacienteDto p = service.findById(id);
 
 		if (!Objects.isNull(p)) {
 			return ResponseEntity.ok(service.findById(id));
 		}
 		return ResponseEntity.badRequest().body("Objeto não Encontrado");
 	}
-	
-	@GetMapping("/tutor/{tutorId}")
-	public ResponseEntity<?> getTutor(@PathVariable Long tutorId) {
-
-		Tutor tutor = service.getTutor(tutorId);
-
-		if (!Objects.isNull(tutor)) {
-			return ResponseEntity.ok(tutor);
-		}
-		return ResponseEntity.badRequest().body("Objeto não Encontrado");
-	}
 
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody Paciente paciente) {
-		
-		Tutor tutor = tutorService.getById(paciente.getTutorId());
-		
-		if(!Objects.isNull(tutor)) {
-			paciente.setTutor(tutor);
-			return ResponseEntity.ok(paciente);			
-		}
-//		
-		return ResponseEntity.badRequest().body("Objeto Tutor Não Encontrado");
+	public ResponseEntity<?> save(@RequestBody Paciente paciente) throws Exception {
+		return ResponseEntity.ok(service.save(paciente));
 	}
-	
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Paciente paciente) {
 
-		Paciente p = service.update(id, paciente);
+		PacienteDto p = service.update(id, paciente);
 
 		if (!Objects.isNull(p)) {
 			return ResponseEntity.ok(p);
@@ -84,7 +63,7 @@ public class PacienteController {
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<String> delete(Long id) {
+	public ResponseEntity<String> delete(@PathVariable Long id) {
 		String msg = service.delete(id);
 		return ResponseEntity.ok(msg);
 	}

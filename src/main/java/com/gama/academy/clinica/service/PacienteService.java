@@ -6,10 +6,10 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gama.academy.clinica.dto.PacienteDto;
 import com.gama.academy.clinica.model.Paciente;
 import com.gama.academy.clinica.model.Tutor;
 import com.gama.academy.clinica.repository.PacienteRepository;
-import com.gama.academy.clinica.repository.TutorRepository;
 
 @Service
 public class PacienteService {
@@ -17,41 +17,54 @@ public class PacienteService {
 	@Autowired
 	private PacienteRepository pacienteRepository;
 
-	public List<Paciente> getAll() {
-		return pacienteRepository.findAll();
+	@Autowired
+	private TutorService tutorService;
+
+	public List<PacienteDto> getAll() {
+
+		List<Paciente> pacientes = pacienteRepository.findAll();
+		List<PacienteDto> pacientesDto = pacientes.stream().map(paciente -> new PacienteDto(paciente)).toList();
+		return pacientesDto;
 	}
 
-	public Paciente findById(Long id) {
-		return pacienteRepository.findById(id).orElse(null);
-	}
-
-	public Tutor getTutor(Long tutorId) {
-
-		Tutor tutor = pacienteRepository.getTutor(tutorId);
-
-		return tutor;
-	}
-
-	public Paciente save(Paciente p) {
-		return pacienteRepository.save(p);
-	}
-
-	public Paciente update(Long id, Paciente p) {
-
-		Paciente paciente = findById(id);
-
+	public PacienteDto findById(Long id) {
+		Paciente paciente = pacienteRepository.findById(id).orElse(null);
+		
 		if (!Objects.isNull(paciente)) {
-			p.setId(id);
-			return pacienteRepository.save(p);
+			return new PacienteDto(paciente);
+		}
+		return null;
+	}
+
+	public PacienteDto save(Paciente paciente) {
+
+		Tutor tutor = tutorService.getById(paciente.getTutorId());
+		if (!Objects.isNull(tutor)) {
+			paciente.setTutor(tutor);
+			Paciente pacienteSalvo = pacienteRepository.save(paciente);
+			return new PacienteDto(pacienteSalvo);
+		}
+		return null;
+	}
+
+	public PacienteDto update(Long id, Paciente pacienteNovo) {
+
+		Paciente pacienteAntigo = pacienteRepository.findById(id).orElse(null);
+		
+		if (!Objects.isNull(pacienteAntigo)) {
+			
+			pacienteNovo.setId(pacienteAntigo.getId());
+			pacienteNovo.setTutor(pacienteAntigo.getTutor());			
+			pacienteNovo = pacienteRepository.save(pacienteNovo);
+			
+			return new PacienteDto(pacienteNovo);
 		}
 		return null;
 	}
 
 	public String delete(Long id) {
-
-		Paciente p = findById(id);
-
-		if (p != null) {
+		
+		if (!Objects.isNull(findById(id))) {
 			pacienteRepository.deleteById(id);
 			return "Objeto Excluido";
 		}

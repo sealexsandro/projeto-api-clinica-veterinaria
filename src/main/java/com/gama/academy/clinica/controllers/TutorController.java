@@ -37,27 +37,25 @@ public class TutorController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody Tutor tutor) {
+	public ResponseEntity<?> save(@RequestBody Tutor tutor) throws Exception  {
 
 		Tutor t = tutorService.save(tutor);
 
 		if (tutor != null) {
 			return ResponseEntity.ok(t);
 		}
-		// Não é esta a resposta
 		return ResponseEntity.noContent().build();
 
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Tutor tutor) {
+	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Tutor tutor) throws Exception  {
 
 		Tutor t = tutorService.update(id, tutor);
 
 		if (tutor != null) {
 			return ResponseEntity.ok(t);
 		}
-		// Não é esta a resposta
 		return ResponseEntity.noContent().build();
 	}
 	

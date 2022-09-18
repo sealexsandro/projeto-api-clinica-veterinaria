@@ -11,12 +11,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.ToString;
 
-@Getter
-@Setter
+@ToString
+@Data
 @Entity
 @Table(name = "tb_tutor")
 public class Tutor {
@@ -24,19 +26,25 @@ public class Tutor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotBlank(message = "Nome é Obrigatório!")
 	private String nome;
+	
+	@NotBlank(message = "Email é Obrigatório!")
+	@Email(message = "Email Inválido!")
 	private String email;
+	
+	@NotBlank(message = "Telefone é Obrigatório!")
 	private String telefone;
 
 	@OneToMany(mappedBy = "tutor", targetEntity = Paciente.class, cascade = CascadeType.ALL)
-	private List<Paciente> pacientes = new ArrayList<>();
-	
-//	@OneToMany(cascade = CascadeType.ALL)
-//	private List<Paciente> pacientes = new ArrayList<>();
+	//@JsonManagedReference
+	private List<Paciente> pacientes;
 
 	public Tutor() {
+		this.pacientes = new ArrayList<>();
 	}
-	
+
 	public void addPaciente(Paciente paciente) {
 		this.pacientes.add(paciente);
 	}
@@ -57,6 +65,7 @@ public class Tutor {
 		Tutor other = (Tutor) obj;
 		return Objects.equals(id, other.id);
 	}
-
+	
+	
 
 }
