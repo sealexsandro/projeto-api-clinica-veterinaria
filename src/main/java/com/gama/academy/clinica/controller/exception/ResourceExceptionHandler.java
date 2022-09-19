@@ -29,13 +29,4 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(status).body(err);
 	}
 
-//	@ExceptionHandler(NullPointerException.class)
-//	public ResponseEntity<StandardError> alreadyExistAccountByCpf(NullPointerException e, HttpServletRequest request) {
-//		HttpStatus status = HttpStatus.NOT_FOUND;
-//		StandardError err = new StandardError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
-//		return ResponseEntity.status(status).body(err);
-//	}
-
-
-
 }
