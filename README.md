@@ -23,6 +23,12 @@ Back-end:
 
 <br>
 
+## ARQUITETURA
+
+![Arquitetura](https://github.com/ricardo-yuri/clinica-veterinaria/blob/main/src/main/java/com/gama/academy/clinica/assets/arquitetura.png)
+
+<br>
+
 ## INTEGRANTES DO GRUPO
 
 - João Pedro Lopes
