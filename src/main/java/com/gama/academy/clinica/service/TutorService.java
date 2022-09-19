@@ -1,16 +1,16 @@
 package com.gama.academy.clinica.service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gama.academy.clinica.exception.ViolacaoDeConstraintException;
 import com.gama.academy.clinica.model.Tutor;
 import com.gama.academy.clinica.repository.TutorRepository;
+import com.gama.academy.clinica.service.exception.ResourceNotFoundException;
+import com.gama.academy.clinica.service.exception.ViolationConstraintException;
 
 @Service
 public class TutorService {
@@ -26,23 +26,25 @@ public class TutorService {
 		return tutorRepository.findById(id).orElse(null);
 	}
 
-	public Tutor save(Tutor tutor) throws Exception {
+	public Tutor save(Tutor tutor) {
 
 		try {
 			return tutorRepository.save(tutor);
 		} catch (ConstraintViolationException e) {
-			throw new ViolacaoDeConstraintException(e.getMessage());
+			throw new ViolationConstraintException(e.getMessage());
 		}
 	}
 
-	public Tutor update(Long id, Tutor tutor) throws Exception  {
-		Tutor tutorAtualizar = getById(id);
+	public Tutor update(Long id, Tutor newTutor) {
 
-		if (tutorAtualizar != null) {
-//			tutor.setId(id);
-			return save(tutor);
+		Tutor oldTutor = getById(id);
+
+		if (oldTutor != null) {
+			newTutor.setId(id);
+			return save(newTutor);
+		} else {
+			throw new ResourceNotFoundException(Tutor.class.getSimpleName());
 		}
-		return null;
 	}
 
 	public String delete(Long id) {
@@ -52,8 +54,9 @@ public class TutorService {
 		if (tutor != null) {
 			tutorRepository.deleteById(id);
 			return "Objeto Excluido";
+		} else {
+			throw new ResourceNotFoundException(Tutor.class.getSimpleName());
 		}
-		return "Objeto Não Encontrado";
 
 	}
 

@@ -1,4 +1,4 @@
-package com.gama.academy.clinica.controllers;
+package com.gama.academy.clinica.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public class TutorController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Tutor tutor) throws Exception  {
+	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Tutor tutor)  {
 
 		Tutor t = tutorService.update(id, tutor);
 

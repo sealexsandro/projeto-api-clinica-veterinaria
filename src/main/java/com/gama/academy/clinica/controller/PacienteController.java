@@ -1,4 +1,4 @@
-package com.gama.academy.clinica.controllers;
+package com.gama.academy.clinica.controller;
 
 import java.util.List;
 import java.util.Objects;

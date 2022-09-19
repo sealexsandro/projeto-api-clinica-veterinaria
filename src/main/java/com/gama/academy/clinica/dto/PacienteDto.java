@@ -1,7 +1,8 @@
 package com.gama.academy.clinica.dto;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gama.academy.clinica.model.Paciente;
 import com.gama.academy.clinica.model.SexoPaciente;
 
@@ -13,7 +14,9 @@ public class PacienteDto {
 	private Long id;
 	private String nome;
 	private SexoPaciente sexo;
-	private Instant dataNascimento;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "GMT-3")
+	private LocalDate dataNascimento;
 
 	private TutorDto tutor;
 
@@ -27,6 +30,5 @@ public class PacienteDto {
 		this.dataNascimento = paciente.getDataNascimento();
 		this.tutor = new TutorDto(paciente.getTutor());
 	}
-
 
 }
