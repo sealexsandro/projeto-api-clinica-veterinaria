@@ -13,7 +13,7 @@ import com.gama.academy.clinica.dto.PacienteDto;
 import com.gama.academy.clinica.model.Paciente;
 import com.gama.academy.clinica.model.Tutor;
 import com.gama.academy.clinica.repository.PacienteRepository;
-import com.gama.academy.clinica.service.exception.ResourceNotFoundException;
+import com.gama.academy.clinica.service.exception.ControllerNotFoundException;
 import com.gama.academy.clinica.service.exception.ViolationConstraintException;
 
 @Service
@@ -54,7 +54,7 @@ public class PacienteService {
 				throw new ViolationConstraintException(e.getMessage());
 			}
 		} else {
-			throw new ResourceNotFoundException(Tutor.class.getSimpleName());
+			throw new ControllerNotFoundException(Tutor.class.getSimpleName());
 		}
 	}
 
@@ -75,7 +75,7 @@ public class PacienteService {
 					
 					return new PacienteDto(newPatient);
 				}else {
-					throw new ResourceNotFoundException(Tutor.class.getSimpleName());
+					throw new ControllerNotFoundException(Tutor.class.getSimpleName());
 				}
 				
 				
@@ -83,7 +83,7 @@ public class PacienteService {
 				throw new ViolationConstraintException(e.getMessage());
 			}
 		} else {
-			throw new ResourceNotFoundException(Paciente.class.getSimpleName());
+			throw new ControllerNotFoundException(Paciente.class.getSimpleName());
 		}
 	}
 
@@ -96,7 +96,7 @@ public class PacienteService {
 			pacienteRepository.deleteById(id);
 			return "Objeto Excluido";	
 		}else {
-			throw new ResourceNotFoundException(Paciente.class.getSimpleName());
+			throw new ControllerNotFoundException(Paciente.class.getSimpleName());
 		}
 	}
 

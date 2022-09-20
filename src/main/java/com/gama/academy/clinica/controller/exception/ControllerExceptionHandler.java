@@ -9,16 +9,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.gama.academy.clinica.service.exception.ResourceNotFoundException;
+import com.gama.academy.clinica.service.exception.ControllerNotFoundException;
 import com.gama.academy.clinica.service.exception.ViolationConstraintException;
 
 @ControllerAdvice
-public class ResourceExceptionHandler {
+public class ControllerExceptionHandler {
 	
-	@ExceptionHandler(ResourceNotFoundException.class)
-	public ResponseEntity<StandardError> resourceNorFound(ResourceNotFoundException e, HttpServletRequest request) {
+	@ExceptionHandler(ControllerNotFoundException.class)
+	public ResponseEntity<StandardError> resourceNorFound(
+			ControllerNotFoundException e,
+			HttpServletRequest request) {
+		
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		StandardError err = new StandardError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+		StandardError err = new StandardError(
+				Instant.now(),
+				status.value(), 
+				e.getMessage(), 
+				request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
 

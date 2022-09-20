@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.gama.academy.clinica.model.Tutor;
 import com.gama.academy.clinica.repository.TutorRepository;
-import com.gama.academy.clinica.service.exception.ResourceNotFoundException;
+import com.gama.academy.clinica.service.exception.ControllerNotFoundException;
 import com.gama.academy.clinica.service.exception.ViolationConstraintException;
 
 @Service
@@ -45,7 +45,7 @@ public class TutorService {
 			newTutor.setId(id);
 			return save(newTutor);
 		} else {
-			throw new ResourceNotFoundException(Tutor.class.getSimpleName());
+			throw new ControllerNotFoundException(Tutor.class.getSimpleName());
 		}
 	}
 
@@ -57,7 +57,7 @@ public class TutorService {
 			tutorRepository.deleteById(id);
 			return "Objeto Excluido";
 		} else {
-			throw new ResourceNotFoundException(Tutor.class.getSimpleName());
+			throw new ControllerNotFoundException(Tutor.class.getSimpleName());
 		}
 
 	}
