@@ -1,6 +1,7 @@
 package com.gama.academy.clinica.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.ConstraintViolationException;
 
@@ -18,8 +19,9 @@ public class TutorService {
 	@Autowired
 	private TutorRepository tutorRepository;
 
-	public ArrayList<Tutor> getAll() {
-		return (ArrayList<Tutor>) tutorRepository.findAll();
+	public List<Tutor> getAll() {
+		
+		return  tutorRepository.findAll();
 	}
 
 	public Tutor getById(Long id) {

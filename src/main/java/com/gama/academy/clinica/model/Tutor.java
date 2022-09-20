@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 import lombok.ToString;
@@ -37,7 +40,7 @@ public class Tutor {
 	@NotBlank(message = "Telefone é Obrigatório!")
 	private String telefone;
 
-	@OneToMany(mappedBy = "tutor", targetEntity = Paciente.class, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "tutor", targetEntity = Paciente.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	//@JsonManagedReference
 	private List<Paciente> pacientes;
 
@@ -47,6 +50,10 @@ public class Tutor {
 
 	public void addPaciente(Paciente paciente) {
 		this.pacientes.add(paciente);
+	}
+	
+	public Boolean removePaciente(Paciente p) {
+		return pacientes.remove(p);
 	}
 
 	@Override

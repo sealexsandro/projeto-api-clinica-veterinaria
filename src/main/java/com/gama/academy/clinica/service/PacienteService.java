@@ -64,10 +64,20 @@ public class PacienteService {
 		if (!Objects.isNull(oldPatient)) {
 
 			try {
-				newPatient.setId(oldPatient.getId());
-				newPatient.setTutor(oldPatient.getTutor());
-				newPatient = pacienteRepository.save(newPatient);
-				return new PacienteDto(newPatient);
+				
+				Tutor tutor =  tutorService.getById(newPatient.getTutorId());
+				
+				if(!Objects.isNull(tutor)) {
+					newPatient.setId(oldPatient.getId());
+					newPatient.setTutor(tutor);
+					newPatient = pacienteRepository.save(newPatient);
+					
+					return new PacienteDto(newPatient);
+				}else {
+					throw new ResourceNotFoundException(Tutor.class.getSimpleName());
+				}
+				
+				
 			} catch (ConstraintViolationException e) {
 				throw new ViolationConstraintException(e.getMessage());
 			}
@@ -78,9 +88,23 @@ public class PacienteService {
 
 	public String delete(Long id) {
 
-		if (!Objects.isNull(findById(id))) {
+		Paciente p = pacienteRepository.findById(id).orElse(null);
+		if (p != null) {
+			System.out.println("Nome do Paciente: "+p.getNome());
+//			Tutor tutor = tutorService.getById(p.getTutor().getId());
+//			tutorService.update(tutor.getId(), tutor);
+//			if(tutor.removePaciente(p)) {
+//				System.out.println("Entrou aqui");
+//				tutor.getPacientes().forEach(p2 -> System.out.println(p2));
+//				pacienteRepository.delete(p);
+//				return "Objeto Excluido";				
+//			}else {
+//				System.out.println("Deu ruim");
+//				return null;
+//			}
+			
 			pacienteRepository.deleteById(id);
-			return "Objeto Excluido";
+			return "Objeto Excluido";	
 		}else {
 			throw new ResourceNotFoundException(Paciente.class.getSimpleName());
 		}

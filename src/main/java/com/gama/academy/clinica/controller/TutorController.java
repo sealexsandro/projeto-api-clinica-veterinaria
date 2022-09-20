@@ -33,7 +33,12 @@ public class TutorController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Tutor> getById(@PathVariable Long id) {
 		Tutor tutor = tutorService.getById(id);
-		return ResponseEntity.ok(tutor);
+		if(tutor !=null) {
+			return ResponseEntity.ok(tutor);
+			
+		}else {
+			return ResponseEntity.noContent().build();
+		}
 	}
 
 	@PostMapping
