@@ -41,7 +41,6 @@ public class Tutor {
 	private String telefone;
 
 	@OneToMany(mappedBy = "tutor", targetEntity = Paciente.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	//@JsonManagedReference
 	private List<Paciente> pacientes;
 
 	public Tutor() {

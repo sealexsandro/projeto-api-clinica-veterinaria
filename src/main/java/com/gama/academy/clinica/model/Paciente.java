@@ -45,7 +45,6 @@ public class Paciente {
 	@ManyToOne
 	@JoinColumn(name = "tutor_id")
 	@JsonIgnore
-	//@JsonBackReference
 	private Tutor tutor;
 	
 	@Transient

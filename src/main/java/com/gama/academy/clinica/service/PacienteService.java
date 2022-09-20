@@ -3,6 +3,7 @@ package com.gama.academy.clinica.service;
 import java.util.List;
 import java.util.Objects;
 
+import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,23 +87,12 @@ public class PacienteService {
 		}
 	}
 
+	@Transactional
 	public String delete(Long id) {
 
 		Paciente p = pacienteRepository.findById(id).orElse(null);
 		if (p != null) {
-			System.out.println("Nome do Paciente: "+p.getNome());
-//			Tutor tutor = tutorService.getById(p.getTutor().getId());
-//			tutorService.update(tutor.getId(), tutor);
-//			if(tutor.removePaciente(p)) {
-//				System.out.println("Entrou aqui");
-//				tutor.getPacientes().forEach(p2 -> System.out.println(p2));
-//				pacienteRepository.delete(p);
-//				return "Objeto Excluido";				
-//			}else {
-//				System.out.println("Deu ruim");
-//				return null;
-//			}
-			
+			p.getTutor().removePaciente(p);
 			pacienteRepository.deleteById(id);
 			return "Objeto Excluido";	
 		}else {
