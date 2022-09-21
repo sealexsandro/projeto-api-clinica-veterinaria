@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -28,11 +32,17 @@ public class Agendamento {
 	private StatusAgendamento statusAgendamento;
 	private Double pesoPaciente;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 	private Paciente paciente;
 	
-	@OneToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Procedimento> procedimentos;
+	
+	@Transient
+	private Long pacienteId;
+	
+	@Transient
+	private List<Long> procedimentosIds;
 
 	public Agendamento() {
 		procedimentos = new ArrayList<>();
@@ -54,8 +64,5 @@ public class Agendamento {
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-	
-	
-
 
 }
